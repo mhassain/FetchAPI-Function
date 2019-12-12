@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style></style>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <title>Posts</title>
+  </head>
+  <body>
+    <div id="posts" class="container"></div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-------------Main-Js---------->
+    <script>
+      const posts_api = "https://jsonplaceholder.typicode.com/posts";
+
+      fetch(posts_api)
+        .then(function(resp) {
+          return resp.json();
+        })
+        .then(function(posts) {
+          let userPosts = "";
+          posts.forEach(post => {
+            userPosts += `
+              <div class="text-center">
+                <p>${post.id}</p>
+                <h4>${post.title}</h4>
+                <p>${post.body}</p>
+              </div>
+            `;
+          });
+          document.getElementById("posts").innerHTML = userPosts;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    </script>
+  </body>
+</html>

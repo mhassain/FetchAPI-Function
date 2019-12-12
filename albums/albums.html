@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <style></style>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <title>Albums</title>
+  </head>
+  <body>
+    <div id="albums" class="container"></div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-------------Main-Js---------->
+    <script>
+      const photos_api = "https://jsonplaceholder.typicode.com/photos";
+      const albums_api = "https://jsonplaceholder.typicode.com/albums";
+
+      fetch(albums_api)
+        .then(function(response) {
+          return response.json();
+        })
+        .then(function(albums) {
+          const Album = albums;
+          fetch(photos_api)
+            .then(function(resp) {
+              return resp.json();
+            })
+            .then(function(photos) {
+              //console.log(photos);
+              let photoAlbum = "";
+              let sl = "";
+              let tr = "";
+
+              Album.forEach(album => {
+                photoAlbum += `
+                <div class="mt-5">
+                    <p>ID: ${album.id}</p>
+                    <img src="${photos[album.id - 1].thumbnailUrl}">
+                    <footer>Title: ${album.title}</footer>
+                </div>
+
+                `;
+              });
+              document.getElementById("albums").innerHTML = photoAlbum;
+            });
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    </script>
+  </body>
+</html>
